@@ -66,7 +66,7 @@ impl Component for Paudle {
             return false;
         }
         match msg {
-            PaudleMsg::TypeLetter(c) if self.current_guess.len() < self.word_length => {
+            PaudleMsg::TypeLetter(c) if self.current_guess.chars().count() < self.word_length => {
                 self.current_guess.push(c.to_ascii_lowercase());
                 true
             }
@@ -77,7 +77,7 @@ impl Component for Paudle {
                 true
             }
             PaudleMsg::Submit => {
-                if self.current_guess.len() == self.word_length {
+                if self.current_guess.chars().count() == self.word_length {
                     if !WORD_LIST.contains(&self.current_guess) {
                         self.bad_guess = true;
                         return true;
@@ -138,7 +138,7 @@ impl Component for Paudle {
 }
 
 fn evaluate_guess(word: &str, guess: &str) -> Vec<CellValue> {
-    let mut vals = Vec::with_capacity(word.len());
+    let mut vals = Vec::with_capacity(word.chars().count());
     let mut counts = word
         .chars()
         .fold(HashMap::new(), |mut acc: HashMap<char, usize>, c| {
@@ -185,7 +185,7 @@ fn handle_keypress(e: KeyboardEvent) -> Option<PaudleMsg> {
     if e.key() == ENTER {
         return Some(PaudleMsg::Submit);
     }
-    if e.key().len() > 1 {
+    if e.key().chars().count() > 1 {
         return None;
     }
     if e.ctrl_key() || e.alt_key() || e.meta_key() || e.shift_key() {

@@ -28,15 +28,15 @@ impl Component for Keyboard {
             html! { <Key def={ctx.props().keys.get_status(c)} /> }
         };
 
-        let row_one = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P']
+        let row_one = ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ']
             .into_iter()
             .map(key)
             .collect::<Vec<_>>();
-        let row_two = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L']
+        let row_two = ['Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э']
             .into_iter()
             .map(key)
             .collect::<Vec<_>>();
-        let row_three = ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+        let row_three = ['Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю']
             .into_iter()
             .map(key)
             .collect::<Vec<_>>();
@@ -46,7 +46,7 @@ impl Component for Keyboard {
             if let Some(t) = e.target() {
                 if let Ok(div) = t.dyn_into::<HtmlElement>() {
                     if let Some(key) = div.get_attribute("data-key-id") {
-                        if key.len() == 1 {
+                        if key.chars().count() == 1 {
                             if let Some(c) = key.chars().next() {
                                 key_press.emit(PaudleMsg::TypeLetter(c));
                             }
